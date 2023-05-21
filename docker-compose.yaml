@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+# db image with env variables. name comes from java app.properties file
+  vprodb:
+    image: vprofile/vprofiledb:V1
+    ports:
+      - "3306:3306"
+    volumes:
+      - vprodbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=vprodpass
+# memcached image, default
+  vprocache01:
+    image: memcached
+    ports:
+      - "11211:11211"
+# rabbitmq image, default
+  vpromq01:
+    image: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+# tomcat custom image, ports and mapped volume
+  vproapp:
+    image: vprofile/vprofileapp:V1
+    ports:
+      - "8080:8080"
+    volumes:
+      - vproappdata:/usr/local/tomcat/webapps
+# nginx custom image, ports and mapped volume
+  vproweb:
+    image: vprofile/vprofileweb:V1
+    ports:
+      - "80:80" 
+
+volumes:
+  vprodbdata: {}
+  vproappdata: {}
+    
