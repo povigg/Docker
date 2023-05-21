@@ -1,2 +1,3 @@
-# Docker
-Docker projects will be stored here
+## Multistage docker file
+
+Comments are inside Dockerfile
